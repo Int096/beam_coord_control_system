@@ -8,6 +8,9 @@
 #include <G4NistManager.hh>
 #include <G4LogicalVolume.hh>
 #include <G4PVPlacement.hh>
+#include <G4UnitsTable.hh>
+#include <G4EllipticalTube.hh>
+#include <G4UnionSolid.hh>
 
 class DetectorConstruction : public G4VUserDetectorConstruction
 {

@@ -53,9 +53,9 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
     /*-----------------------------------------------------------------------*/
 
     // Геометрические размеры мира
-    constexpr G4double world_x = 0.5*m;
-    constexpr G4double world_y = 0.5*m;
-    constexpr G4double world_z = 1.0*m;
+    constexpr G4double world_x = 0.1*m;
+    constexpr G4double world_y = 0.1*m;
+    constexpr G4double world_z = 0.5*m;
     
     // Создание объемов мира
     auto solidWorld = new G4Box("solidWorld", world_x, world_y, world_z);
@@ -67,6 +67,35 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
                                         0,
                                         false,
                                         0);
+    
+    /*-----------------------------------------------------------------------*/
+    //          Создание мишени 
+    /*-----------------------------------------------------------------------*/
+
+    constexpr G4double target_Dx = 24*mm/2;
+    constexpr G4double target_Dy = 14*mm/2;
+    constexpr G4double target_Dz = 40*mm/2;
+    constexpr G4double target_thickness = 30* 1.e-6*m;
+
+    auto solidTarget_inner = new G4EllipticalTube("solidTarget_inner",
+                                                  target_Dx-2*target_thickness,
+                                                  target_Dy-2*target_thickness,
+                                                  target_Dz);
+    auto solidTarget_external = new G4EllipticalTube("solidTarget_external",
+                                                     target_Dx,
+                                                     target_Dy,
+                                                     target_Dz);
+
+    auto solidTarget = new G4UnionSolid("solidTarget", solidTarget_external, solidTarget_inner);
+    
+    auto logicTarget = new G4LogicalVolume(solidTarget, stainlessSteel, "logicTarget");
+    auto physTarget  = new G4PVPlacement(0,
+                                         G4ThreeVector(0., 0., -world_z+target_Dz),
+                                         logicTarget,
+                                         "physTarget",
+                                         logicWorld,
+                                         false,
+                                         0);
 
     /*-----------------------------------------------------------------------*/
     //          Создание стенки

@@ -5,6 +5,8 @@
 #include <G4VisExecutive.hh>
 
 #include "headers/DetectorConstruction.hh"
+#include "headers/PhysicsList.hh"
+#include "headers/ActionInitialization.hh"
 
 int main(int argc, char** argv)
 {
@@ -13,8 +15,8 @@ int main(int argc, char** argv)
 
     // Инициализация обязательных классов
     runManager->SetUserInitialization(new DetectorConstruction());
-    //runManager->SetUserInitialization(new PhysicsList());
-    //runManager->SetUserInitialization(new ActionInitialization());
+    runManager->SetUserInitialization(new PhysicsList());
+    runManager->SetUserInitialization(new ActionInitialization());
     
     // Инициализация ядра Geant4
     runManager->Initialize();

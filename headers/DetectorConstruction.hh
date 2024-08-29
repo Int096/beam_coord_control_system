@@ -11,6 +11,8 @@
 #include <G4UnitsTable.hh>
 #include <G4EllipticalTube.hh>
 #include <G4UnionSolid.hh>
+#include <G4Tubs.hh>
+#include <G4RotationMatrix.hh>
 
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
